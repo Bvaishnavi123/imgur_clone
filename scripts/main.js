@@ -4,6 +4,15 @@ document.getElementById("Main-Nav-Container").innerHTML = navbar();
 document.getElementById("query").addEventListener("input", () => {
   debounce(main, 1000);
 });
+let inputValue = document.getElementById("query")
+inputValue.addEventListener("keypress",(e)=>{
+   //console.log(e)
+    if(e.key == "Enter"){
+       let value = inputValue.value;
+       localStorage.setItem("searchItems", value)
+       window.location.href ="search.html"
+    }
+})
 
 async function searchmovie() {
   try {
@@ -29,18 +38,19 @@ async function main() {
   append(data);
 }
 
-function append(movies) {
+function append(data) {
   document.getElementById("searchDataDisplay").textContent = "";
-  movies.map(function (e) {
+  data.map(function (e) {
     // console.log(e);
-    let Images = document.createElement("p");
-    Images.setAttribute("id", "serachImages");
-    Images.innerText = e.alt_description;
-    Images.addEventListener("click", () => {
-      localStorage.setItem("ids", JSON.stringify(e));
+    let text = document.createElement("p");
+    text.setAttribute("id", "serachImages");
+    text.innerText = e.alt_description;
+    text.addEventListener("click", () => {
+      localStorage.setItem("item", JSON.stringify(e));
+      window.location.href="details.html"
     });
 
-    document.getElementById("searchDataDisplay").append(Images);
+    document.getElementById("searchDataDisplay").append(text);
   });
 }
 
